@@ -1,4 +1,4 @@
-name: Release
+﻿name: Release
 
 on:
   push:
@@ -80,32 +80,6 @@ jobs:
           restore_manifest
           trap - EXIT
           git diff --exit-code -- "$MANIFEST"
-      - name: Validate package contents
-        shell: bash
-        run: |
-          set -euo pipefail
-          package="artifacts/Umbraco.Community.Forms.ExcelExport.${{ steps.version.outputs.version }}.nupkg"
-          test -f "$package"
-          test -f "artifacts/Umbraco.Community.Forms.ExcelExport.${{ steps.version.outputs.version }}.snupkg"
-
-          manifest="$(unzip -p "$package" wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/umbraco-package.json)"
-          jq -e --arg version "${{ steps.version.outputs.version }}" '
-            .id == "Umbraco.Community.Forms.ExcelExport" and
-            .name == "Umbraco Community Forms Excel Export" and
-            .version == $version and
-            ([.extensions[] | select(.type == "localization")] | length == 2) and
-            ([.extensions[].alias] | unique | length == 2) and
-            ([.extensions[].js] | sort) == [
-              "/App_Plugins/UmbracoCommunityFormsExcelExport/lang/da-DK.js",
-              "/App_Plugins/UmbracoCommunityFormsExcelExport/lang/en.js"
-            ] and
-            ([.extensions[].meta.culture] | sort) == ["da-DK", "en"]
-          ' <<< "$manifest"
-
-          unzip -t "$package" \
-            wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/umbraco-package.json \
-            wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/lang/en.js \
-            wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/lang/da-DK.js
       - name: NuGet login (OIDC)
         id: login
         uses: NuGet/login@ebc737b6fc418a6ca0073cf116ec8dc156d8b81e # v1

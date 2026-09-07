@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <AssemblyName>Umbraco.Community.Forms.ExcelExport</AssemblyName>
     <RootNamespace>Umbraco.Community.Forms.ExcelExport</RootNamespace>
@@ -30,6 +30,5 @@
     <None Include="..\..\LICENSE" Pack="true" PackagePath="/" />
     <None Include="..\..\docs\logo.png" Pack="true" PackagePath="logo.png" />
     <None Include="..\..\docs\logo.png" Pack="true" PackagePath="docs\logo.png" />
-    <Content Include="wwwroot\App_Plugins\**\*" Pack="true" PackagePath="wwwroot\App_Plugins\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>
