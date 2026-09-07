@@ -1,0 +1,17 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "Title": "Umbraco Forms Excel Export",
+  "Category": "Developer Tools",
+  "Description": "Exports Umbraco Forms submissions to Excel.",
+  "AuthorDetails": {
+    "Name": "Søren Kottal",
+    "Url": "https://github.com/skttl"
+  },
+  "LicenseTypes": [
+    "Free"
+  ],
+  "DocumentationUrl": "https://github.com/skttl/umbraco-forms-excel-export#readme",
+  "IssueTrackerUrl": "https://github.com/skttl/umbraco-forms-excel-export/issues",
+  "PackageType": "Package",
+  "VersionDependencyMode": "Default"
+}

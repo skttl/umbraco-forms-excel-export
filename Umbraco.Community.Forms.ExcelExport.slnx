@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Umbraco.Community.Forms.ExcelExport/Umbraco.Community.Forms.ExcelExport.csproj" />
+  <Project Path="tests/Umbraco.Community.Forms.ExcelExport.Tests/Umbraco.Community.Forms.ExcelExport.Tests.csproj" />
+</Solution>

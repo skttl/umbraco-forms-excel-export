@@ -1,0 +1,14 @@
+## Build output
+bin/
+obj/
+artifacts/
+.vs/
+.idea/
+
+## Test and local tooling
+TestResults/
+.templateengine/
+
+## OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Umbraco.Community.Forms.ExcelExport</AssemblyName>
+    <RootNamespace>Umbraco.Community.Forms.ExcelExport</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>true</IsPackable>
+    <PackageId>Umbraco.Community.Forms.ExcelExport</PackageId>
+    <PackageDescription>Excel XLSX exporters for Umbraco Forms.</PackageDescription>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)..\..\artifacts\$(UmbracoFormsMajor)</PackageOutputPath>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(UmbracoFormsMajor)' == '17'">
+    <PackageVersion Condition="'$(PackageVersion)' == ''">17.0.0-local</PackageVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(UmbracoFormsMajor)' == '18'">
+    <PackageVersion Condition="'$(PackageVersion)' == ''">18.0.0-local</PackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SpreadCheetah" Version="1.28.0" />
+    <PackageReference Include="Umbraco.Forms.Core" Version="$(UmbracoFormsVersion)" />
+    <PackageReference Include="Umbraco.Forms.Core.Providers" Version="$(UmbracoFormsVersion)" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="/" />
+    <Content Include="wwwroot\App_Plugins\**\*" Pack="true" PackagePath="wwwroot\App_Plugins\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,24 @@
+{
+  "id": "Umbraco.Community.Forms.ExcelExport",
+  "name": "Umbraco Community Forms Excel Export",
+  "extensions": [
+    {
+      "type": "localization",
+      "alias": "UmbracoCommunityFormsExcelExport.Localization.En",
+      "name": "English",
+      "meta": {
+        "culture": "en"
+      },
+      "js": "/App_Plugins/UmbracoCommunityFormsExcelExport/lang/en.js"
+    },
+    {
+      "type": "localization",
+      "alias": "UmbracoCommunityFormsExcelExport.Localization.DaDk",
+      "name": "Danish",
+      "meta": {
+        "culture": "da-DK"
+      },
+      "js": "/App_Plugins/UmbracoCommunityFormsExcelExport/lang/da-DK.js"
+    }
+  ]
+}
