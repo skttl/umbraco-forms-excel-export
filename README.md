@@ -1,5 +1,7 @@
 # Umbraco Forms Excel Export
 
+![Umbraco Forms Excel Export logo](docs/logo.png)
+
 Umbraco Forms Excel Export adds native `.xlsx` exports to Umbraco Forms. It
 registers two export types in the existing Forms export menu and streams the
 workbook directly to the browser. No configuration is required.

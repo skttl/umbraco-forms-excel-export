@@ -7,6 +7,7 @@
     <PackageId>Umbraco.Community.Forms.ExcelExport</PackageId>
     <PackageDescription>Excel XLSX exporters for Umbraco Forms.</PackageDescription>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageOutputPath>$(MSBuildThisFileDirectory)..\..\artifacts\$(UmbracoFormsMajor)</PackageOutputPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -27,6 +28,8 @@
     <PackageReference Include="Umbraco.Forms.Core.Providers" Version="$(UmbracoFormsVersion)" />
     <None Include="README.md" Pack="true" PackagePath="/" />
     <None Include="..\..\LICENSE" Pack="true" PackagePath="/" />
+    <None Include="..\..\docs\logo.png" Pack="true" PackagePath="logo.png" />
+    <None Include="..\..\docs\logo.png" Pack="true" PackagePath="docs\logo.png" />
     <Content Include="wwwroot\App_Plugins\**\*" Pack="true" PackagePath="wwwroot\App_Plugins\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>
