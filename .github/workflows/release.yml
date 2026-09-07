@@ -61,6 +61,7 @@ jobs:
           set -euo pipefail
           backup="$(mktemp)"
           manifest_tmp="$(mktemp)"
+          cp "$MANIFEST" "$backup"
 
           restore_manifest() {
             cp "$backup" "$MANIFEST"
