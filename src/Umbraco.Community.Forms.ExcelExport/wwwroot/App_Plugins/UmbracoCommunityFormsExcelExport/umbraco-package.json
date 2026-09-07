@@ -1,6 +1,7 @@
 {
   "id": "Umbraco.Community.Forms.ExcelExport",
   "name": "Umbraco Community Forms Excel Export",
+  "version": "0.0.0",
   "extensions": [
     {
       "type": "localization",

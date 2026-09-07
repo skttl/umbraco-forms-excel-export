@@ -52,14 +52,59 @@ jobs:
         run: dotnet build Umbraco.Community.Forms.ExcelExport.slnx --no-restore -c Release -p:UmbracoFormsMajor=${{ steps.version.outputs.forms-major }}
       - name: Test
         run: dotnet test Umbraco.Community.Forms.ExcelExport.slnx --no-restore -c Release -p:UmbracoFormsMajor=${{ steps.version.outputs.forms-major }}
-      - name: Pack
-        run: dotnet pack src/Umbraco.Community.Forms.ExcelExport/Umbraco.Community.Forms.ExcelExport.csproj --no-restore -c Release -p:UmbracoFormsMajor=${{ steps.version.outputs.forms-major }} -p:PackageVersion=${{ steps.version.outputs.version }} -o artifacts
+      - name: Pack with release version
+        shell: bash
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          MANIFEST: src/Umbraco.Community.Forms.ExcelExport/wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/umbraco-package.json
+        run: |
+          set -euo pipefail
+          backup="$(mktemp)"
+          manifest_tmp="$(mktemp)"
+
+          restore_manifest() {
+            cp "$backup" "$MANIFEST"
+            rm -f "$backup" "$manifest_tmp"
+          }
+          trap restore_manifest EXIT
+
+          jq --arg version "$VERSION" '.version = $version' "$MANIFEST" > "$manifest_tmp"
+          cp "$manifest_tmp" "$MANIFEST"
+
+          dotnet pack src/Umbraco.Community.Forms.ExcelExport/Umbraco.Community.Forms.ExcelExport.csproj \
+            --no-restore -c Release \
+            -p:UmbracoFormsMajor=${{ steps.version.outputs.forms-major }} \
+            -p:PackageVersion="$VERSION" -o artifacts
+
+          restore_manifest
+          trap - EXIT
+          git diff --exit-code -- "$MANIFEST"
       - name: Validate package contents
         shell: bash
         run: |
           set -euo pipefail
-          test -f "artifacts/Umbraco.Community.Forms.ExcelExport.${{ steps.version.outputs.version }}.nupkg"
+          package="artifacts/Umbraco.Community.Forms.ExcelExport.${{ steps.version.outputs.version }}.nupkg"
+          test -f "$package"
           test -f "artifacts/Umbraco.Community.Forms.ExcelExport.${{ steps.version.outputs.version }}.snupkg"
+
+          manifest="$(unzip -p "$package" wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/umbraco-package.json)"
+          jq -e --arg version "${{ steps.version.outputs.version }}" '
+            .id == "Umbraco.Community.Forms.ExcelExport" and
+            .name == "Umbraco Community Forms Excel Export" and
+            .version == $version and
+            ([.extensions[] | select(.type == "localization")] | length == 2) and
+            ([.extensions[].alias] | unique | length == 2) and
+            ([.extensions[].js] | sort) == [
+              "/App_Plugins/UmbracoCommunityFormsExcelExport/lang/da-DK.js",
+              "/App_Plugins/UmbracoCommunityFormsExcelExport/lang/en.js"
+            ] and
+            ([.extensions[].meta.culture] | sort) == ["da-DK", "en"]
+          ' <<< "$manifest"
+
+          unzip -t "$package" \
+            wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/umbraco-package.json \
+            wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/lang/en.js \
+            wwwroot/App_Plugins/UmbracoCommunityFormsExcelExport/lang/da-DK.js
       - name: NuGet login (OIDC)
         id: login
         uses: NuGet/login@ebc737b6fc418a6ca0073cf116ec8dc156d8b81e # v1
