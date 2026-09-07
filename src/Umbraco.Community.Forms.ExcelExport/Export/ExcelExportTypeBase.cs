@@ -42,11 +42,11 @@ public abstract class ExcelExportTypeBase : ExportType
     }
 
     public override Task<string> ExportRecordsAsync(Guid formId, RecordExportFilter filter) =>
-        throw new NotSupportedException(Message("XLSX exports must be generated through the file export endpoint.", "XLSX-eksport skal genereres via fil-eksport-endpointet."));
+        throw new NotSupportedException("XLSX exports must be generated through the file export endpoint.");
 
     protected override async Task ExportToSteamAsync(Guid formId, RecordExportFilter filter, Stream stream)
     {
-        var form = _formService.Get(formId) ?? throw new InvalidOperationException(Message("The requested form could not be found.", "Den ønskede formular blev ikke fundet."));
+        var form = _formService.Get(formId) ?? throw new InvalidOperationException("The requested form could not be found.");
         var results = _recordSearcher.QueryDataBase(formId, filter);
         var schema = results.Schema.ToArray();
         var fields = form.AllFields.ToDictionary(field => field.Id);
@@ -68,7 +68,7 @@ public abstract class ExcelExportTypeBase : ExportType
             rowNumber++;
             if (rowNumber > MaximumDataRows)
             {
-                throw new InvalidOperationException(Message("The export contains more rows than Excel supports.", "Eksporten indeholder flere rækker, end Excel understøtter."));
+                throw new InvalidOperationException("The export contains more rows than Excel supports.");
             }
 
             var values = result.Fields.ToArray();
@@ -190,12 +190,8 @@ public abstract class ExcelExportTypeBase : ExportType
     {
         if (count > 16_384)
         {
-            throw new InvalidOperationException(Message("The export contains more columns than Excel supports.", "Eksporten indeholder flere kolonner, end Excel understøtter."));
+            throw new InvalidOperationException("The export contains more columns than Excel supports.");
         }
     }
 
-    private static string Message(string english, string danish) =>
-        CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.Equals("da", StringComparison.OrdinalIgnoreCase)
-            ? danish
-            : english;
 }

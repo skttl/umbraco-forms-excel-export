@@ -13,6 +13,7 @@ public sealed class ExcelExport : ExcelExportTypeBase
         IFieldPreValueSourceTypeService fieldPreValueSourceTypeService)
         : base(recordSearcher, formService, fieldTypeStorage, fieldPreValueSourceService, fieldPreValueSourceTypeService, false)
     {
+        Id = Guid.Parse("3f9c9d6e-5b98-4f1f-9d3a-6d0b5c0d6f01");
         Alias = "excel";
     }
 }

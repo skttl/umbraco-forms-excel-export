@@ -27,11 +27,7 @@ internal static class ExcelCellFactory
         var sanitized = builder.ToString();
         if (sanitized.Length > MaximumCellLength)
         {
-            var language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-            var message = language.Equals("da", StringComparison.OrdinalIgnoreCase)
-                ? $"Værdien for '{column}' overskrider Excels maksimale cellelængde."
-                : $"The value for '{column}' exceeds Excel's maximum cell length.";
-            throw new InvalidOperationException(message);
+            throw new InvalidOperationException($"The value for '{column}' exceeds Excel's maximum cell length.");
         }
 
         return sanitized;

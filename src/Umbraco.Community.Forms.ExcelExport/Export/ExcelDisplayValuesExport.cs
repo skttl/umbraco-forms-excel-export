@@ -13,6 +13,7 @@ public sealed class ExcelDisplayValuesExport : ExcelExportTypeBase
         IFieldPreValueSourceTypeService fieldPreValueSourceTypeService)
         : base(recordSearcher, formService, fieldTypeStorage, fieldPreValueSourceService, fieldPreValueSourceTypeService, true)
     {
+        Id = Guid.Parse("7b8e4f3a-2c61-4e8d-a5f7-1c9b6d2e8a02");
         Alias = "excelDisplayValues";
     }
 }
